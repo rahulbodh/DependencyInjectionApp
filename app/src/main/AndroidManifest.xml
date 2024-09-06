@@ -15,6 +15,11 @@
         android:theme="@style/Theme.MVVMExample"
         tools:targetApi="31">
         <activity
+            android:name=".QuestionDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_question_detail"
+            android:theme="@style/Theme.MVVMExample.NoActionBar" />
+        <activity
             android:name=".QuestionDetailsActivity"
             android:exported="false" />
         <activity
