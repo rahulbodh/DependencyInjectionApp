@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rahul.mvvmexample.model.Question;
 import com.rahul.mvvmexample.model.QuestionListResponseSchema;
+import com.rahul.mvvmexample.network.RetrofitInstance;
 import com.rahul.mvvmexample.network.StackOverFlowApI;
 import com.rahul.mvvmexample.utils.Constants;
 
@@ -39,23 +40,18 @@ public class QuestionsListActivity extends AppCompatActivity implements Callback
 
             }
         });
-//       questionsAdapter = new QuestionsAdapter(new OnQuestionClickListener() {
-//            @Override
-//            public void onQuestionClick(Question question) {
-//                FragmentManager fm = getSupportFragmentManager();
-//                // QuestionDetailsActivity.start(QuestionsListActivity.this, question.getQuestionId(), fm);
-//            }
-//        });
+        questionsAdapter = new QuestionsAdapter(new QuestionsAdapter.OnQuestionClickListener() {
+            @Override
+            public void onQuestionClick(Question question) {
+                QuestionDetailActivity.start(QuestionsListActivity.this, question.getQuestionId());
+            }
+        });
+
         recyclerView.setAdapter(questionsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // INIT RETROFIT
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        stackOverFlowApI = retrofit.create(StackOverFlowApI.class);
+       stackOverFlowApI = RetrofitInstance.getStackoverflowApi();
 
 
 

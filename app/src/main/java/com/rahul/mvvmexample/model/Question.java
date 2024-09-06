@@ -23,8 +23,8 @@ public class Question {
         this.title = title;
     }
 
-    public Integer getQuestionId() {
-        return questionId;
+    public String getQuestionId() {
+        return String.valueOf(questionId);
     }
 
     public void setQuestionId(Integer questionId) {
