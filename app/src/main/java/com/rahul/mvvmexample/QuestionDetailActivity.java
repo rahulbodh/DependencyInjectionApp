@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Html;
 import android.view.View;
@@ -57,16 +58,21 @@ public class QuestionDetailActivity extends AppCompatActivity implements Callbac
         toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = binding.fab;
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+
+                // Using View Binding to access the TextView
+                i.putExtra(Intent.EXTRA_TEXT, binding.textScrollingView.text2.getText().toString());
+                startActivity(i);
             }
         });
-    }
 
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -101,6 +107,12 @@ public class QuestionDetailActivity extends AppCompatActivity implements Callbac
 
     @Override
     public void onFailure(Call<SingleQuestionResponseSchema> call, Throwable throwable) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(ServerErrorDialogFragment.newInstance(), null)
+                .commitAllowingStateLoss();
 
     }
+
+
 }
